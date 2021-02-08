@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Articles</h1>
+<hr>
+<form>
+<input type="text" class="input-sm" maxlength="64" name="keyword" placeholder="Search"/>
+ <button type="submit" class="btn btn-primary btn-sm">Search</button>
+ </form>
+ <hr>
+{% if articles %}
+
+{% for article in articles %}
+
+<!-- Title -->
+
+        <h3 class="mt-4"><a href="{% url 'article:detail' article.id %}" >{{article.title}} | Posted on {{article.created_date}}</a> by
+          <a href="#">{{article.author.username}}</a></h3>
+        <!-- Author -->
+        <p class="lead">
+          
+        </p>
+        <!-- Preview Image -->
+        {% if article.article_image %}
+        <a href="{% url 'article:detail' article.id %}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""></a>
+        {% endif %}
+        <p class="lead">
+        {{article.content|safe|truncatewords:2}}
+        <a style="float:right;" href="{% url 'article:detail' article.id %}">Devamını Oku</a>
+        
+        </p>
+        <hr>
+{% endfor %}
+
+{% else %}
+<div class="alert alert-warning">There is no article here</div>
+{% endif %}
+{% endblock body %}
